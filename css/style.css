@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 
 /* ==========================================================================
    1. VARIÁVEIS E DEFINIÇÕES GLOBAIS
@@ -139,25 +139,64 @@ time {
     pointer-events: none;
 }
 
+/* Container que segura a navegação e as sombras */
 nav#filtros {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 1rem 0.5rem;
-    flex-wrap: wrap;
     position: sticky;
     top: 0;
-    background: var(--light);
     z-index: 10;
+    background: var(--light);
     border-top: 2px solid rgba(0,0,0,0.05);
     border-bottom: 2px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+}
+
+/* Efeito de Gradiente/Sombra nas laterais */
+nav#filtros::before,
+nav#filtros::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px; /* Largura da sombra */
+    z-index: 11;
+    pointer-events: none; /* Permite clicar nos botões por baixo da sombra */
+}
+
+/* Sombra na esquerda */
+nav#filtros::before {
+    left: 0;
+    background: linear-gradient(to right, var(--light) 10%, rgba(247, 247, 247, 0) 100%);
+}
+
+/* Sombra na direita */
+nav#filtros::after {
+    right: 0;
+    background: linear-gradient(to left, var(--light) 10%, rgba(247, 247, 247, 0) 100%);
+}
+
+/* Ajuste no comportamento da lista de botões internos */
+nav#filtros {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem 20px; /* Padding maior nas laterais para o botão não sumir sob a sombra */
+    gap: 10px;
+    scrollbar-width: none;
+}
+
+nav#filtros::-webkit-scrollbar {
+    display: none;
 }
 
 .btn-filter {
+    flex: 0 0 auto;
+    display: inline-block; /* Garante alinhamento horizontal */
     border: 2px solid var(--primary);
-    background: transparent;
+    background: var(--white);
     color: var(--primary);
-    padding: 8px 16px;
+    padding: 8px 20px;
     border-radius: 50px;
     cursor: pointer;
     transition: 0.3s ease;
